@@ -5,26 +5,9 @@
         
             <option value="TEKKEN World Tour 2024" >TEKKEN World Tour 2024</option>
         
-            <option value="TEKKEN World Tour 2023">TEKKEN World Tour 2023</option>
-        
-            <option value="European TEKKEN Cup 2023">European TEKKEN Cup 2023</option>
-        
-            <option value="TEKKEN World Tour 2022">TEKKEN World Tour 2022</option>
-        
-            <option value="TEKKEN Online Challenge 2021">TEKKEN Online Challenge 2021</option>
-        
-            <option value="Online Dojo Open Beta Test">Online Dojo Open Beta Test</option>
-        
     </select>
-    <ul id="list" class="list">
-        <li
-        v-for="player in observed_players"
-        :key="player.id"  
-        >
-        {{ player.name }} <span>{{ player.points }}</span>
-        </li>
-    </ul>
-   
+    
+
 </template>
 
 <script setup>
@@ -37,9 +20,9 @@
     
     onMounted(() => {
         set_select()})
-        const set_select = () => {
-        form.cat = observed_tour.value
-        }
+    const set_select = () => {
+    form.cat = observed_tour.value
+    }
 </script>
 
 <style>
