@@ -31,12 +31,11 @@ import {computed, ref} from 'vue';
 //will use the changes in data here to set historical point totals for each tournament played
 //{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800}
 //expecting data to be in descending order of 
-const observed_data = ref([{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800},{"class": "DOJO 96+","title":"HAVOC 5","date": new Date("05/13/2024"),"rank":10,"points":10},{"class": "DOJO 48","title":"HAVOC 4","date": new Date("04/16/2024"),"rank":12,"points":6},{"class": "DOJO 96+","title":"HAVOC 3","date": new Date("04/13/2024"),"rank":13,"points":5}])
+const observed_data = ref([{"class": "MASTER","title":"EVO89","date": new Date("07/31/2024"),"rank":1,"points":800},{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800}, {"class": "MASTER","title":"EVO-1","date": new Date("07/01/2024"),"rank":3,"points":500},{"class": "DOJO 96+","title":"HAVOC 5","date": new Date("05/13/2024"),"rank":10,"points":10},{"class": "DOJO 48","title":"HAVOC 4","date": new Date("04/16/2024"),"rank":12,"points":6},{"class": "DOJO 96+","title":"HAVOC 3","date": new Date("04/13/2024"),"rank":13,"points":5}])
 const observed_players = ref([{"name":"Arslan Ash","points":[{"tour":"TEKKEN World Tour 2024", attained:2315}]}]) //Will be to see which players are to be observed {name:String, points:[tourney_name1:INT,tourney_name2:INT]}
 const observed_tour = ref("TEKKEN World Tour 2024")//Will ensure the right data for that tournament is being observed.
 //I will need to make this optimised and readable later
 const point_total = computed(() => {
-  //issue with how tournaments are categorised in applicable tournament object
   var total_list = []
   //uses TWT 2024 rules: 1 M+, 2 M, 3 Challengers, 4 Dojos
   const MAX = {'MASTER':2,"CHALLENGER":3,"DOJO":4}
@@ -44,6 +43,7 @@ const point_total = computed(() => {
   var applicable_tournaments = {"m+":undefined,"m":[],"c":[],"d":[]}
   const point_copy = observed_data.value.reverse();
   for ( const t of point_copy ) {
+    //need to optimise how code works here to reduce code lines
     switch (t.class) {
     case "MASTER+" : {
       if (applicable_tournaments["m+"] != undefined){
@@ -133,16 +133,13 @@ const point_total = computed(() => {
       total = total + ct.points;
     }
   }
-  console.log("ISSUE")
-  console.log(total)
   if (applicable_tournaments["d"].length != 0){
     const d = applicable_tournaments.d;
     for (const dt of d) {
       total = total + dt.points;
     }
   }
-  console.log(total);
-  total_list.push({x: new Date(t.date),y:total})
+  total_list.push({label: t.name, x: new Date(t.date),y:total})
 }
   return total_list;
 
