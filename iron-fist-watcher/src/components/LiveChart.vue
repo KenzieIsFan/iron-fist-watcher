@@ -1,21 +1,11 @@
 <script>
 export default {
     props: ['observed_tour','point_total'],
+
   data() {
-    return {
-      chart: null,
-      options: {
-        theme: "light2", // "light1", "dark1", "dark2"
-        animationEnabled: true, // change to true   
-        animationDuration: 3000,
-        title:{
-          text: "Points Attained this season"
-        },
-        axisY: {
-          title: "Points"
-        },
-        axisX:{
-          stripLines: [{
+    var patchDates = []
+    if (this.observed_tour == "TEKKEN World Tour 2024") {
+      patchDates = [{
             value: new Date("02/28/2024"),
             label:"Patch 1.02.01"
           },
@@ -56,17 +46,31 @@ export default {
             label:"Patch 1.09"
           }
           ]
+    }
+    return {
+      width:1000,
+      chart: null,
+      options: {
+        theme: "light2", // "light1", "dark1", "dark2"
+        animationEnabled: true, // change to true   
+        animationDuration: 3000,
+        zoomEnabled: true,
+        title:{
+          text: "Points Attained this season"
+        },
+        axisY: {
+          title: "Points"
+        },
+        axisX:{
+          //Strip lines used here to indicate where patches for the game may have taken place
+          stripLines: patchDates
         },
         data: [{
-          type: "line", // Change type to "bar", "area", "spline", "pie",etc.
+          type: "line", 
           xValueFormatString: "MMM DD, YYYY",
           markerSize: 0,
           dataPoints: this.point_total
         }]
-      },
-      styleOptions: {
-        width: "150%",
-        height: "400px"
       }
     }
   },
@@ -79,5 +83,5 @@ export default {
 
 </script>
 <template>
-	<CanvasJSChart :options="options"/>
+	<CanvasJSChart :options="options" :styles="{width: '80vw', height: '360px'}"/>
 </template>

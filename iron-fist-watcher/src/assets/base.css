@@ -6,25 +6,33 @@
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: content-box;
+  border:1px solid red;
 }
+
+
+#app {
+  display: flex;
+  height:100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.chart {
+  width: 1000px;
+}
+
+
 
 body {
   background-color: #f7f7f7;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  
   min-height: 10vh;
   margin: 0;
   font-family: 'Lato', sans-serif;
   font-size: 18px;
 }
 
-.container {
-  margin: 30px auto;
-  width: 400px;
-}
 
 h1 {
   letter-spacing: 1px;
@@ -43,7 +51,7 @@ h4 {
 }
 
 .list li {
-  background-color: #fff;
+  background-color: #d3d2d2;
   box-shadow: var(--box-shadow);
   color: #333;
   display: flex;
@@ -51,4 +59,16 @@ h4 {
   position: relative;
   padding: 10px;
   margin: 10px 0;
+}
+
+.list .list_legend {
+  background-color: #141414;
+  box-shadow: var(--box-shadow);
+  color: #e7e7e7;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding: 10px;
+  margin: 10px 0;
+  
 }
