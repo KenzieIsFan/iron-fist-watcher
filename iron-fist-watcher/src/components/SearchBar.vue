@@ -1,10 +1,11 @@
 <template>
     <input type="text" v-model="input" placeholder="Search players in TWT..." />
-    <div v-if="input !== ''" >
-      <div  v-for="player in searchedPlayers" :key="player">
-        <p>{{ player }}</p>
-      </div>
+    <div class="searchResults" v-if="input !== ''" >
+      <li  v-for="player in searchedPlayers" :key="player">
+        {{ player.name }}
+      </li>
     </div>
+  
  </template>
 
 <script setup>
@@ -24,3 +25,32 @@ const searchedPlayers = computed(() => {
       });
 });
 </script>
+
+<style>
+input {
+  width:60%;
+}
+
+
+
+div .searchResults{
+  position: absolute;
+  justify-content:end;
+  text-align: center;
+  right:40%;
+  z-index: 2;
+  width:50%;
+}
+
+.searchResults li {
+  background-color: #f09292;
+  box-shadow: var(--box-shadow);
+  color: #333;
+  display: flex;
+  max-width: 90%;
+
+  padding: 10px;
+  margin: 10px 0;
+}
+
+</style>

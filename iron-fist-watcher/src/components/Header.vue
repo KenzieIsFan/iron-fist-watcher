@@ -1,4 +1,5 @@
 <template> 
+<div class="user_input">
     <select v-model="observed_tour"  @change="set_select()">
                     
             <option value="TEKKEN World Tour 2024" >TEKKEN World Tour 2024</option>
@@ -6,6 +7,7 @@
     </select>
     
     <SearchBar></SearchBar>
+</div>
 </template>
 
 <script setup>
@@ -24,12 +26,9 @@ import SearchBar from './SearchBar.vue';
 </script>
 
 <style>
-.titlebox{
-    
-    position:absolute;
-}
-.rankbox{
-    position:relative;
+.user_input {
+    text-align:center;
 }
 </style>
+
 
