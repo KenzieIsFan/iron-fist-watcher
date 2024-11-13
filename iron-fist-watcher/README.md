@@ -1,6 +1,6 @@
 # iron-fist-watcher
 
-This template should help get you started developing with Vue 3 in Vite.
+Website built with vue to better demonstrate the point changes during the Tekken World Tour on a graph, especially when monthly patches were common. Also aims to provide a search system to find players and their records.
 
 ## Recommended IDE Setup
 
