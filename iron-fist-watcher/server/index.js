@@ -10,6 +10,12 @@ const app = express();
 app.get("/api/v1/hello", (_req, res) => {
   res.json({ message: "Hello, world!" });
 });
+//for search engine to look for players with names similar to provided text
+//app.get('/api/getPlayers)
+
+
+//for getting the relevant data stored about a player
+//app.get("/api/getData")
 
 app.use(homepageRouter);
 
