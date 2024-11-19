@@ -1,9 +1,9 @@
 <template>
     <input type="text" v-model="input" placeholder="Search players in TWT..." />
     <div class="searchResults" v-if="input !== ''" >
-      <li  v-for="player in searchedPlayers" :key="player">
+      <button  v-for="player in searchedPlayers" :key="player">
         {{ player.name }}
-      </li>
+      </button>
     </div>
   
  </template>
@@ -14,7 +14,6 @@ import { computed, onMounted, reactive, ref } from "vue";
 //players should be an object of name and db id for when it is selected 
 const players = reactive([{name:"apple"}, {name:"banana"}, {name:"orange"}]);
 let input = ref("");
-console.log(players)
 const searchedPlayers = computed(() => {
       return players.filter((player) => {
         return (
@@ -37,7 +36,7 @@ div .searchResults{
   position: absolute;
   justify-content:end;
   text-align: center;
-  right:40%;
+  left:30%;
   z-index: 2;
   width:50%;
 }
@@ -48,6 +47,17 @@ div .searchResults{
   color: #333;
   display: flex;
   max-width: 90%;
+
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.searchResults button {
+  background-color: #f09292;
+  box-shadow: var(--box-shadow);
+  color: #333;
+  display: flex;
+  width: 90%;
 
   padding: 10px;
   margin: 10px 0;

@@ -3,16 +3,7 @@
   <div>
   <h3>Iron Fist Watcher - {{ observed_tour }}</h3>
   <Header v-model:observed_players="observed_players" v-model:observed_tour="observed_tour" />
-  <ul id="list" class="list">
-        <li class="list_legend"> <span>TOURNAMENT</span><span>CLASS</span><span>DATE</span><span>PLACEMENT</span>
-        </li>
-        <li
-        v-for="tournament in observed_data"
-        
-        >
-        <span>{{ tournament.title }} </span><span>{{ tournament.class }}</span><span>{{ tournament.date.toLocaleDateString() }}</span><span>{{ tournament.rank }}</span>
-        </li>
-    </ul>
+  <Ranking :data="observed_data"></Ranking>
   
    
   </div>
@@ -26,16 +17,19 @@
 <script setup>
 import Header from "./components/Header.vue"
 import LiveChart from "./components/LiveChart.vue"
-
-import {computed, ref} from 'vue';
+import Ranking  from "./components/Ranking.vue"
+import {computed, ref,reactive} from 'vue';
 // ref makes the variables work and react on a global app scale
 //observed_data will be used in conjunction with updates from server side so has to be introduced here
 //will use the changes in data here to set historical point totals for each tournament played
 //{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800}
 //expecting data to be in descending order of 
-const observed_data = ref([{"class": "MASTER","title":"EVO89","date": new Date("07/31/2024"),"rank":1,"points":800},{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800}, {"class": "MASTER","title":"EVO-1","date": new Date("07/01/2024"),"rank":3,"points":500},{"class": "DOJO 96+","title":"HAVOC 5","date": new Date("05/13/2024"),"rank":10,"points":10},{"class": "DOJO 48","title":"HAVOC 4","date": new Date("04/16/2024"),"rank":12,"points":6},{"class": "DOJO 96+","title":"HAVOC 3","date": new Date("04/13/2024"),"rank":13,"points":5}])
-const observed_players = ref([{"name":"Arslan Ash"}]) //Will be to see which players are to be observed {name:String, points:[tourney_name1:INT,tourney_name2:INT]}
+
+
+const observed_data = ref([{"class": "MASTER","title":"EVO89","date": "07/31/2024","rank":1,"points":800},{"class": "MASTER","title":"EVO","date": "07/19/2024","rank":1,"points":800}, {"class": "MASTER","title":"EVO-1","date": "07/01/2024","rank":3,"points":500},{"class": "DOJO 96+","title":"HAVOC 5","date": "05/13/2024","rank":10,"points":10},{"class": "DOJO 48","title":"HAVOC 4","date": "04/16/2024","rank":12,"points":6},{"class": "DOJO 96+","title":"HAVOC 3","date": "04/13/2024","rank":13,"points":5}])
+const observed_players = ref({"name":"Arslan Ash"}) //Will be to see which players are to be observed {name:String, points:[tourney_name1:INT,tourney_name2:INT]}
 const observed_tour = ref("TEKKEN World Tour 2024")//Will ensure the right data for that tournament is being observed.
+
 //I will need to make this optimised and readable later
 const point_total = computed(() => {
   var total_list = []
@@ -130,8 +124,6 @@ const point_total = computed(() => {
   if (applicable_tournaments["c"].length != 0){
     const c = applicable_tournaments["c"];
     for (const ct of c) {
-      console.log('c issue')
-      console.log(ct)
       total = total + ct.points;
     }
   }
