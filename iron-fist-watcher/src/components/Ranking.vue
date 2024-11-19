@@ -1,16 +1,22 @@
 <template>
     <vue-good-table
       :columns="columns"
-      :rows="tourData.data"/>
+      :rows="tourData.data"
+      styleClass="vgt-table striped bordered"
+      ></vue-good-table>
 </template>
 
 <script setup>
 import {defineProps, ref} from 'vue';
 const tourData = defineProps([ 'data'] )
 const columns = ref([
+  {
+    label:'Name',
+    field:'title'
+  },
 
 {
-  label: 'Tournament type',
+  label: 'Type',
   field: 'class',
 },
 {
@@ -21,7 +27,7 @@ const columns = ref([
   dateOutputFormat: 'MMM dd yyyy',
 },
 {
-    label:"Tournament placement",
+    label:"Rank",
     field:"rank",
     type:'number'
 },

@@ -3,10 +3,12 @@
   <div>
   <h3>Iron Fist Watcher - {{ observed_tour }}</h3>
   <Header v-model:observed_players="observed_players" v-model:observed_tour="observed_tour" />
-  <Ranking :data="observed_data"></Ranking>
+  
   
    
   </div>
+  <div><Ranking :data="observed_data"></Ranking></div>
+    
     <LiveChart class="chart" :observed_tour="observed_tour" :point_total="point_total" />
   
   </div>
