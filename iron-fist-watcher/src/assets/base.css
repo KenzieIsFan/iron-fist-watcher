@@ -7,10 +7,12 @@
 
 * {
   box-sizing: content-box;
-  
   z-index: 1;
 }
 
+.vert > div {
+  padding-bottom: 2%;
+}
 
 #app {
   display: flex;
