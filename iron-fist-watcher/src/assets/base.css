@@ -10,9 +10,7 @@
   z-index: 1;
 }
 
-.vert > div {
-  padding-bottom: 2%;
-}
+
 
 #app {
   display: flex;
@@ -76,6 +74,6 @@ h4 {
   
 }
 
-thead th button {
-  width:93%;
+#vgt-table thead th button {
+  width:95%;
 }
