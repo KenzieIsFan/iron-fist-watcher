@@ -6,13 +6,15 @@
         
     </select>
     
-    <SearchBar></SearchBar>
+    <SearchBar @change-player="(name) => $emit('change-player', name)"></SearchBar>
 </div>
 </template>
 
 <script setup>
     import { useTemplateRef, ref,reactive, onMounted } from 'vue'
-import SearchBar from './SearchBar.vue';
+    import SearchBar from './SearchBar.vue';
+    defineEmits(['change-player']) 
+
     const observed_tour = defineModel("observed_tour")
     const form = reactive({
     cat: ""

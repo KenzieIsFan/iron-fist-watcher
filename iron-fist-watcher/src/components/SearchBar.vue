@@ -1,7 +1,7 @@
 <template>
     <input type="text" v-model="input" placeholder="Search players in TWT..." />
     <div class="searchResults" v-if="input !== ''" >
-      <button  v-for="player in searchedPlayers" :key="player">
+      <button @click="$emit('change-player', player.name)" v-for="player in searchedPlayers" :key="player">
         {{ player.name }}
       </button>
     </div>
@@ -11,8 +11,9 @@
 <script setup>
 import { computed, onMounted, reactive, ref } from "vue";
 //Later will have to create a way for the 
-//players should be an object of name and db id for when it is selected 
-const players = reactive([{name:"apple"}, {name:"banana"}, {name:"orange"}]);
+//players should be an object of name and db id for when it is selected
+defineEmits(['change-player']) 
+const players = reactive([{name:"Arslan Ash"}, {name:"Ulsan"}]);
 let input = ref("");
 const searchedPlayers = computed(() => {
       return players.filter((player) => {

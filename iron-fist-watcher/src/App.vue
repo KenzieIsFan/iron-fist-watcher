@@ -2,15 +2,11 @@
   <div class="vert">
   <div>
   <h3>Iron Fist Watcher <span>|| Observing: {{ observed_players }}</span></h3>
-  <Header v-model:observed_players="observed_players" v-model:observed_tour="observed_tour" />
+  <Header @change-player="changePlayer" v-model:observed_tour="observed_tour" />
   
-  
-   
   </div>
   <div><Ranking :data="observed_data"></Ranking></div>
-    
     <LiveChart class="chart" :observed_tour="observed_tour" :point_total="point_total" />
-  
   </div>
 </template>
 
@@ -27,20 +23,26 @@ import {computed, ref,reactive} from 'vue';
 //{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800}
 //expecting data to be in descending order of 
 
+//Object.assign(reactiveData, NewData) #Use this to replace the array in observed_data
 
-const observed_data = reactive([{"class": "MASTER","title":"EVO89","date": "07/31/2024","rank":1,"points":800},{"class": "MASTER","title":"EVO","date": "07/19/2024","rank":1,"points":800}, {"class": "MASTER","title":"EVO-1","date": "07/01/2024","rank":3,"points":500},{"class": "DOJO 96+","title":"HAVOC 5","date": "05/13/2024","rank":10,"points":10},{"class": "DOJO 48","title":"HAVOC 4","date": "04/16/2024","rank":12,"points":6},{"class": "DOJO 96+","title":"HAVOC 3","date": "04/13/2024","rank":13,"points":5}])
-const observed_players = ref("Arslan Ash") //Will be to see which players are to be observed {name:String, points:[tourney_name1:INT,tourney_name2:INT]}
+
+const observed_data = reactive([{"class": "MASTER+","title":"EVO","date": "07/19/2024","rank":1,"points":800}, 
+  {"class": "MASTER","title":"EVO-1","date": "07/01/2024","rank":3,"points":500},
+  {"class": "DOJO 96+","title":"HAVOC 5","date": "05/13/2024","rank":10,"points":10},
+  {"class": "DOJO 48","title":"HAVOC 4","date": "04/16/2024","rank":12,"points":6},
+  {"class": "DOJO 96+","title":"HAVOC 3","date": "04/13/2024","rank":13,"points":5}])
+const observed_players = ref("Arslan Ash") //Will be to see which players are to be observed
 const observed_tour = ref("TEKKEN World Tour 2024")//Will ensure the right data for that tournament is being observed.
 
+//point_total converts the data in observed_data into something that can be read by the CanvasJs chart
 //I will need to make this optimised and readable later
-const point_total = computed(() => {
+const point_total = computed(()=> {
   var total_list = []
   //uses TWT 2024 rules: 1 M+, 2 M, 3 Challengers, 4 Dojos
   const MAX = {'MASTER':2,"CHALLENGER":3,"DOJO":4}
   //Store each tournament placement in here to compare to 
   var applicable_tournaments = {"m+":undefined,"m":[],"c":[],"d":[]}
   const point_copy = observed_data
- 
   for ( const t of point_copy.reverse() ) {
     //need to optimise how code works here to reduce code lines
     switch (t.class) {
@@ -141,5 +143,13 @@ const point_total = computed(() => {
   return total_list;
 
 })
+
+function changePlayer(player){
+  console.log(player)
+  observed_players.value = player
+}
+
+
+
 
 </script>
