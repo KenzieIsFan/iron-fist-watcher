@@ -6,7 +6,7 @@
   
   </div>
   <div><Ranking :data="observed_data"></Ranking></div>
-    <LiveChart class="chart" :observed_tour="observed_tour" :point_total="point_total" />
+    <LiveChart class="chart" :observed_tour="observed_tour" :observed_data="observed_data" />
   </div>
 </template>
 
@@ -26,133 +26,21 @@ import {computed, ref,reactive} from 'vue';
 //Object.assign(reactiveData, NewData) #Use this to replace the array in observed_data
 
 
-const observed_data = reactive([{"class": "MASTER+","title":"EVO","date": "07/19/2024","rank":1,"points":800}, 
-  {"class": "MASTER","title":"EVO-1","date": "07/01/2024","rank":3,"points":500},
-  {"class": "DOJO 96+","title":"HAVOC 5","date": "05/13/2024","rank":10,"points":10},
-  {"class": "DOJO 48","title":"HAVOC 4","date": "04/16/2024","rank":12,"points":6},
-  {"class": "DOJO 96+","title":"HAVOC 3","date": "04/13/2024","rank":13,"points":5}])
-const observed_players = ref("Arslan Ash") //Will be to see which players are to be observed
+const observed_data = ref([])
+const observed_players = ref("") //Will be to see which players are to be observed
 const observed_tour = ref("TEKKEN World Tour 2024")//Will ensure the right data for that tournament is being observed.
 
 //point_total converts the data in observed_data into something that can be read by the CanvasJs chart
-//I will need to make this optimised and readable later
-const point_total = computed(()=> {
-  var total_list = []
-  //uses TWT 2024 rules: 1 M+, 2 M, 3 Challengers, 4 Dojos
-  const MAX = {'MASTER':2,"CHALLENGER":3,"DOJO":4}
-  //Store each tournament placement in here to compare to 
-  var applicable_tournaments = {"m+":undefined,"m":[],"c":[],"d":[]}
-  const point_copy = observed_data
-  for ( const t of point_copy.reverse() ) {
-    //need to optimise how code works here to reduce code lines
-    switch (t.class) {
-    case "MASTER+" : {
-      if (applicable_tournaments["m+"] != undefined){
-        const mptourn = applicable_tournaments['m+'];
-        if (mptourn.rank <= t.rank ) {
-          applicable_tournaments['m+'] = t
-          break;
-        } 
-      } else{
-        applicable_tournaments['m+'] = t
-        break;
-      }
-    } 
-
-    case "MASTER" : {
-      const mtourn = applicable_tournaments['m'];
-      if (mtourn.length < MAX.MASTER){
-        mtourn.push(t);
-        if (mtourn.length >=2){
-          mtourn.sort((a,b) => a.rank - b.rank);
-        }
-      } else{
-        const lowest = mtourn[MAX.MASTER-1]
-        if (lowest.rank > t.rank){
-          mtourn[MAX.MASTER-1] = t;
-          mtourn.sort((a,b) => a.rank - b.rank);
-        }
-      }
-      applicable_tournaments['m'] = mtourn;
-      break;
-
-    }
-    
-    case "CHALLENGER": {
-      const ctourn = applicable_tournaments['c'];
-      if (ctourn.length < MAX.CHALLENGER){
-        ctourn.push(t);
-        if (ctourn.length >=2){
-          ctourn.sort((a,b) => a.rank - b.rank);
-        }
-      } else{
-        const lowest = ctourn[MAX.CHALLENGER-1]
-        if (lowest.rank > t.rank){
-          ctourn[MAX.CHALLENGER-1] = t;
-          ctourn.sort((a,b) => a.rank - b.rank);
-        }
-      }
-      applicable_tournaments['c'] = ctourn;
-      break;
-    }
-    default :{
-      const dtourn = applicable_tournaments['d'];
-      if (dtourn.length < MAX.DOJO){
-        dtourn.push(t);
-        if (dtourn.length >=2){
-          dtourn.sort((a,b) => a.points - b.points);
-        }
-      } else{
-        const lowest = dtourn[MAX.DOJO-1]
-        if (lowest.points > t.points){
-          dtourn[MAX.DOJO-1] = t;
-          dtourn.sort((a,b) => a.points - b.points);
-        }
-      }
-      
-      applicable_tournaments['d'] = dtourn;
-    }
-  }
-  //{ x: tournament date, y: total point accumulation }
-  var total = 0
-  if (applicable_tournaments["m+"] != undefined){
-    const mp = applicable_tournaments["m+"];
-    total = total + mp.points;
-  }
-  if (applicable_tournaments["m"].length != 0){
-    const m = applicable_tournaments["m"];
-    for (const mt of m) {
-
-      total = total + mt.points;
-    }
-  }
-  if (applicable_tournaments["c"].length != 0){
-    const c = applicable_tournaments["c"];
-    for (const ct of c) {
-      total = total + ct.points;
-    }
-  }
-  if (applicable_tournaments["d"].length != 0){
-    const d = applicable_tournaments.d;
-    for (const dt of d) {
-      total = total + dt.points;
-    }
-  }
-  total_list.push({label: t.name, x: new Date(t.date),y:total})
-}
-  return total_list;
-
-})
 
 function changePlayer(chosenPlayer){
-  console.log('HELLO'+chosenPlayer)
   if (chosenPlayer !== observed_players.value) {
     observed_players.value = chosenPlayer;
     fetch('/api/getData?'+ new URLSearchParams({
       'player': chosenPlayer
       }).toString()).then((r) => r.json())
       .then(({ data }) => {
-    Object.assign(observed_data,data);
+
+      observed_data.value = data
       });
   
   }
