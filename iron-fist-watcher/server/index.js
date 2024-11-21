@@ -43,7 +43,6 @@ app.get("/api/v1/hello", (_req, res) => {
 //will need to optimise search technique later by either sorting and doing BS or using a trie or some other way
 app.get("/api/getData", (req,res) => {
   const player = req.query.player
-  console.log("hello")
   let player_data = []
   for(var i=0; i<example_data.length; i++) {
     if (example_data[i]["name"] === player){
