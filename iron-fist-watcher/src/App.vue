@@ -144,9 +144,19 @@ const point_total = computed(()=> {
 
 })
 
-function changePlayer(player){
-  console.log(player)
-  observed_players.value = player
+function changePlayer(chosenPlayer){
+  console.log('HELLO'+chosenPlayer)
+  if (chosenPlayer !== observed_players.value) {
+    observed_players.value = chosenPlayer;
+    fetch('/api/getData?'+ new URLSearchParams({
+      'player': chosenPlayer
+      }).toString()).then((r) => r.json())
+      .then(({ data }) => {
+    Object.assign(observed_data,data);
+      });
+  
+  }
+  
 }
 
 
