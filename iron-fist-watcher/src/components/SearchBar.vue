@@ -59,7 +59,7 @@ div .searchResults{
 }
 
 .searchResults button {
-  background-color: #f09292;
+  background-color: #e2e1e1;
   box-shadow: var(--box-shadow);
   color: #333;
   display: flex;
@@ -68,5 +68,18 @@ div .searchResults{
   padding: 10px;
   margin: 10px 0;
 }
+
+.searchResults button:hover {
+  background-color: #bebebe;
+  box-shadow: var(--box-shadow);
+  color: #333;
+  display: flex;
+  width: 90%;
+
+  padding: 10px;
+  margin: 10px 0;
+}
+
+
 
 </style>
