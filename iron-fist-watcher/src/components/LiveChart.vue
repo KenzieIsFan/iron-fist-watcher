@@ -196,19 +196,14 @@ export default {
 
     },
     replaceData(newData) {
-      if (this.options.data[0].dataPoints.length ==0) {
         this.options.data[0].dataPoints = newData;
         this.chart.render();
-        this.$forceUpdate();
-      } else {
-        this.options.data[0].dataPoints = newData;
-        this.chart.render();
-      }
+        
     }
   }
 }
 
 </script>
 <template>
-	<CanvasJSChart @chart-ref="chartInstance" :options="options" :styles="{width: '80vw', height: '360px'}"/>
+	<CanvasJSChart @chart-ref="chartInstance" :options="options" :styles="{width: '80vw', height: '35vh'}"/>
 </template>

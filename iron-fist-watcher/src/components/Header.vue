@@ -1,11 +1,6 @@
 <template> 
 <div class="user_input">
-    <select v-model="observed_tour"  @change="set_select()">
-                    
-            <option value="TEKKEN World Tour 2024" >TEKKEN World Tour 2024</option>
-        
-    </select>
-    
+   
     <SearchBar @change-player="(name) => $emit('change-player', name)"></SearchBar>
 </div>
 </template>
