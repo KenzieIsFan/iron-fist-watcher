@@ -4,11 +4,7 @@ export default {
     props: ['observed_tour','observed_data'],
     computed: {
     point_total() {
-      if (this.observed_data.length ==0){
-        return []
-      }
-
-      console.log("COMPUTING")
+      //issue with 
       var total_list = []
       //uses TWT 2024 rules: 1 M+, 2 M, 3 Challengers, 4 Dojos
       const MAX = {'MASTER':2,"CHALLENGER":3,"DOJO":4}
@@ -196,10 +192,18 @@ export default {
   methods: {
     chartInstance(chart) {
       this.chart = chart;
+      this.chart.render();
+
     },
     replaceData(newData) {
-      this.options.data[0].dataPoints = newData;
-      this.chart.render();
+      if (this.options.data[0].dataPoints.length ==0) {
+        this.options.data[0].dataPoints = newData;
+        this.chart.render();
+        this.$forceUpdate();
+      } else {
+        this.options.data[0].dataPoints = newData;
+        this.chart.render();
+      }
     }
   }
 }
