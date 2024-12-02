@@ -5,7 +5,7 @@
   <Header @change-player="changePlayer" v-model:observed_tour="observed_tour" />
   </div>
   <div class="table"><Ranking :data="observed_data"></Ranking></div>
-  <div class="chart"><LiveChart  :observed_tour="observed_tour" :observed_data="observed_data" /></div>
+  <div  class="chart"><LiveChart  :observed_tour="observed_tour" :observed_data="observed_data" /></div>
     
   </div>
 </template>
@@ -14,7 +14,7 @@
 
 <script setup>
 import Header from "./components/Header.vue"
-import LiveChart from "./components/LiveChart.vue"
+import LiveChart from "./components/LiveChartv2.vue"
 import Ranking  from "./components/Ranking.vue"
 import {computed, ref,reactive} from 'vue';
 // ref makes the variables work and react on a global app scale
@@ -24,7 +24,6 @@ import {computed, ref,reactive} from 'vue';
 //expecting data to be in descending order of 
 
 //Object.assign(reactiveData, NewData) #Use this to replace the array in observed_data
-
 
 const observed_data = ref([])
 const observed_players = ref("") //Will be to see which players are to be observed

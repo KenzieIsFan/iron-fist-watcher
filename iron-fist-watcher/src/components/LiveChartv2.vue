@@ -1,16 +1,107 @@
-<script>
+<script setup>
+import {ref, reactive, computed } from 'vue';
+
 //Current issues: render does not work first time its working on a new value, requires some form of refresh to get going(I click on vue web tools and observe the data there to get it going)
-export default {
-    props: ['observed_tour','observed_data'],
-    computed: {
-    point_total() {
+
+    const props = defineProps(['observed_tour','observed_data'])
+    //computed
+    
+
+  //DATA
+    var patchDates = [];
+    if (props.observed_tour == "TEKKEN World Tour 2024") {
+      patchDates = [{
+            value: new Date("02/28/2024"),
+            label:"Patch 1.02.01"
+          },
+          {
+            value: new Date("03/29/2024"),
+            label:"Patch 1.03.01 (EDDY RELEASE)"
+          },
+          {
+            value: new Date("04/11/2024"),
+            label:"Patch 1.03.02"
+          },
+          {
+            value: new Date("04/30/2024"),
+            label:"Patch 1.04"
+          },
+          {
+            value: new Date("06/10/2024"),
+            label:"Patch 1.05"
+          },
+          {
+            value: new Date("07/22/2024"),
+            label:"Patch 1.06 (LIDIA RELEASE)"
+          },
+          {
+            value: new Date("08/06/2024"),
+            label:"Patch 1.06.02"
+          },
+          {
+            value: new Date("09/03/2024"),
+            label:"Patch 1.07"
+          },
+          {
+            value: new Date("10/01/2024"),
+            label:"Patch 1.08 (HEIHACHI RELEASE)"
+          },
+          {
+            value: new Date("10/30/2024"),
+            label:"Patch 1.09"
+          }
+          ]
+    }
+
+    const chart = ref(undefined);
+    const width = ref(1000);
+    const options = reactive ({
+        theme: "light2", // "light1", "dark1", "dark2"
+        animationEnabled: true, // change to true   
+        animationDuration: 3000,
+        zoomEnabled: true,
+        title:{
+          text: "Points Attained this season"
+        },
+        axisY: {
+          title: "Points"
+        },
+        axisX:{
+          //Strip lines used here to indicate where patches for the game may have taken place
+          stripLines: patchDates
+        },
+        data: [{
+          type: "line", 
+          xValueFormatString: "MMM DD, YYYY",
+          markerSize: 0,
+          dataPoints: [{x: new Date('01/01/2024'),y:0}]
+        }]
+      })
+    
+ 
+//methods
+  
+
+  
+    function chartInstance(chart) {
+      chart.value = chart;
+
+    }
+    function replaceData(newData) {
+        options.data[0].dataPoints = newData;
+        console.log("replaced")
+        chart.render();
+        
+    }
+
+    const point_total = computed(() => {
       //issue with 
       var total_list = []
       //uses TWT 2024 rules: 1 M+, 2 M, 3 Challengers, 4 Dojos
       const MAX = {'MASTER':2,"CHALLENGER":3,"DOJO":4}
       //Store each tournament placement in here to compare to 
       let applicable_tournaments = {"m+":undefined,"m":[],"c":[],"d":[]}
-      let point_copy = this.observed_data
+      let point_copy = props.observed_data
       for ( const t of point_copy.reverse()) {
         console.log(t.date)
         //need to optimise how code works here to reduce code lines
@@ -109,99 +200,10 @@ export default {
       }
       total_list.push({label: t.name, x: new Date(t.date),y:total})
     }
-      this.replaceData(total_list)
+      replaceData(total_list)
       return total_list;
-    }
-
-  },
-  data() {
-    var patchDates = []
-    if (this.observed_tour == "TEKKEN World Tour 2024") {
-      patchDates = [{
-            value: new Date("02/28/2024"),
-            label:"Patch 1.02.01"
-          },
-          {
-            value: new Date("03/29/2024"),
-            label:"Patch 1.03.01 (EDDY RELEASE)"
-          },
-          {
-            value: new Date("04/11/2024"),
-            label:"Patch 1.03.02"
-          },
-          {
-            value: new Date("04/30/2024"),
-            label:"Patch 1.04"
-          },
-          {
-            value: new Date("06/10/2024"),
-            label:"Patch 1.05"
-          },
-          {
-            value: new Date("07/22/2024"),
-            label:"Patch 1.06 (LIDIA RELEASE)"
-          },
-          {
-            value: new Date("08/06/2024"),
-            label:"Patch 1.06.02"
-          },
-          {
-            value: new Date("09/03/2024"),
-            label:"Patch 1.07"
-          },
-          {
-            value: new Date("10/01/2024"),
-            label:"Patch 1.08 (HEIHACHI RELEASE)"
-          },
-          {
-            value: new Date("10/30/2024"),
-            label:"Patch 1.09"
-          }
-          ]
-    }
-    return {
-      width:1000,
-      chart: null,
-      options: {
-        theme: "light2", // "light1", "dark1", "dark2"
-        animationEnabled: true, // change to true   
-        animationDuration: 3000,
-        zoomEnabled: true,
-        title:{
-          text: "Points Attained this season"
-        },
-        axisY: {
-          title: "Points"
-        },
-        axisX:{
-          //Strip lines used here to indicate where patches for the game may have taken place
-          stripLines: patchDates
-        },
-        data: [{
-          type: "line", 
-          xValueFormatString: "MMM DD, YYYY",
-          markerSize: 0,
-          dataPoints: []
-        }]
-      }
-    }
-  },
-
+    })
   
-
-  methods: {
-    chartInstance(chart) {
-      this.chart = chart;
-
-    },
-    replaceData(newData) {
-        this.options.data[0].dataPoints = newData;
-        
-        this.chart.render();
-        
-    }
-  }
-}
 
 </script>
 <template>
