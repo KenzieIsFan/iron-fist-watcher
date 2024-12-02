@@ -2,15 +2,15 @@
 //Current issues: render does not work first time its working on a new value, requires some form of refresh to get going(I click on vue web tools and observe the data there to get it going)
 export default {
     props: ['observed_tour','observed_data'],
-    computed: {
-    point_total() {
+    watch: {
+    observed_data(new_data,old_data) {
       //issue with 
       var total_list = []
       //uses TWT 2024 rules: 1 M+, 2 M, 3 Challengers, 4 Dojos
       const MAX = {'MASTER':2,"CHALLENGER":3,"DOJO":4}
       //Store each tournament placement in here to compare to 
       let applicable_tournaments = {"m+":undefined,"m":[],"c":[],"d":[]}
-      let point_copy = this.observed_data
+      let point_copy = new_data
       for ( const t of point_copy.reverse()) {
         console.log(t.date)
         //need to optimise how code works here to reduce code lines
@@ -110,7 +110,6 @@ export default {
       total_list.push({label: t.name, x: new Date(t.date),y:total})
     }
       this.replaceData(total_list)
-      return total_list;
     }
 
   },

@@ -14,7 +14,7 @@
 
 <script setup>
 import Header from "./components/Header.vue"
-import LiveChart from "./components/LiveChartv2.vue"
+import LiveChart from "./components/LiveChart.vue"
 import Ranking  from "./components/Ranking.vue"
 import {computed, ref,reactive} from 'vue';
 // ref makes the variables work and react on a global app scale
