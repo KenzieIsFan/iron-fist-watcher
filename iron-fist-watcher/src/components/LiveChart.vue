@@ -114,6 +114,11 @@ export default {
 
   },
   data() {
+    let darkmode = 'light2'
+    if (window?.matchMedia?.("(prefers-color-scheme:dark)")?.matches) {
+    darkmode = "dark2"
+  } 
+
     var patchDates = []
     if (this.observed_tour == "TEKKEN World Tour 2024") {
       patchDates = [{
@@ -162,7 +167,7 @@ export default {
       width:1000,
       chart: null,
       options: {
-        theme: "light2", // "light1", "dark1", "dark2"
+        theme: darkmode, // "light1", "dark1", "dark2"
         animationEnabled: true, // change to true   
         animationDuration: 3000,
         zoomEnabled: true,
