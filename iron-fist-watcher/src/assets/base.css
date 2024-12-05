@@ -10,6 +10,7 @@
   z-index: 1;
 }
 .vert {
+  max-width:99%;
   justify-items: center;
   border: 2px solid red;
 }

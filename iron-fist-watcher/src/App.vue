@@ -1,11 +1,11 @@
 <template>
   <div class="vert">
-  <div>
-  <h3>Iron Fist Watcher <span>|| Observing: {{ observed_players }}</span></h3>
-  <Header @change-player="changePlayer" v-model:observed_tour="observed_tour" />
-  </div>
-  <div class="table"><Ranking :data="observed_data"></Ranking></div>
-  <div  class="chart"><LiveChart  :observed_tour="observed_tour" :observed_data="observed_data" /></div>
+    <div>
+      <h3>Iron Fist Watcher <span>|| Observing: {{ observed_players }}</span></h3>
+      <Header @change-player="changePlayer" v-model:observed_tour="observed_tour" />
+    </div>
+    <div class="table"><Ranking :data="observed_data"></Ranking></div>
+    <div  class="chart"><LiveChart  :observed_tour="observed_tour" :observed_data="observed_data" /></div>
     
   </div>
 </template>
