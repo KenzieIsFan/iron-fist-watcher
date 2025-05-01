@@ -1,6 +1,6 @@
 
 from bs4 import BeautifulSoup
-
+import pymongo
 #URL = ""
 #page = requests.get(URL)
 f = open("demofile.html", "r")
@@ -12,9 +12,12 @@ soup = BeautifulSoup(page,"html.parser")
 #make another one to search the page for info regarding the player on that tour.
 siteContent = soup.find("div",class_="site_content")
 sectionBox = siteContent.find("section")
+#for finding player name
+name = sectionBox.find("div",class_= "info_panel items one no-border").find("div",class_="item").find("div",class_="content_area").find("div",class_="title").string
+print(name)
 events = sectionBox.find("div",class_="event items")
-
 #only one item in event items 
+eventArray = []
 event_list = events.find_all("div",class_="item")
 for e in event_list:
     content_area = e.find('div', class_='content_area')
@@ -30,7 +33,8 @@ for e in event_list:
         e_points = e.find('div', class_='point_area').find("div")
 #{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800}
     e_json = {"class": e_cat,"title": e_title,"date": e_date,"rank":e_rank,"points":e_points.string}
-    print(e_json)
+    eventArray.append(e_json)
+print(eventArray)
     
     
 
