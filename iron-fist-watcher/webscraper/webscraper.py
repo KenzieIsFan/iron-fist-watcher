@@ -1,7 +1,7 @@
 
 from bs4 import BeautifulSoup
-import pymongo
-#URL = ""
+from pymongo import MongoClient
+pymongoURI = "mongodb+srv://KenzieIsFan:<dbPasswordhere>@cluster0.4p5toe7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 #page = requests.get(URL)
 f = open("demofile.html", "r")
 page = f.read()
@@ -14,7 +14,7 @@ siteContent = soup.find("div",class_="site_content")
 sectionBox = siteContent.find("section")
 #for finding player name
 name = sectionBox.find("div",class_= "info_panel items one no-border").find("div",class_="item").find("div",class_="content_area").find("div",class_="title").string
-print(name)
+
 events = sectionBox.find("div",class_="event items")
 #only one item in event items 
 eventArray = []
@@ -34,7 +34,27 @@ for e in event_list:
 #{"class": "MASTER","title":"EVO","date": new Date("07/19/2024"),"rank":1,"points":800}
     e_json = {"class": e_cat,"title": e_title,"date": e_date,"rank":e_rank,"points":e_points.string}
     eventArray.append(e_json)
-print(eventArray)
-    
+
+
+client = MongoClient(pymongoURI)
+
+try:
+    database = client.get_database("Iron-Fist-Watcher")
+    players = database.get_collection("Players")
+
+    # Query if player already exists
+    query = { "name": name }
+    player = players.find_one(query)
+    if player == None:
+        noSQLDoc = {"name":name, "placements":eventArray}
+        players.insert_one(noSQLDoc)
+    else: 
+        print("Player has already been added")
+
+    client.close()
+
+except Exception as e:
+    raise Exception("Unable to find the document due to the following error: ", e)
+
     
 
