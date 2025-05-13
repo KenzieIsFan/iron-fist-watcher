@@ -25,7 +25,25 @@ async function run() {
   }
 }
 run().catch(console.dir)
-
+//Use for getting all the names. Should be used once to allow site to search
+async function get_names() {
+  try{
+    await client.connect();
+    const database = client.db("Iron-Fist-Watcher");
+    const players = database.collection("Players");
+    const query ={};
+    const options = {
+      
+      // Include only the necessary fields
+      projection: { _id: 0, name: 1},
+    };
+    const playerNames = await players.find(query, options).sort({name:1});
+    return playerNames
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
 
 async function get_DBdata(name) {
   try{
