@@ -2,7 +2,7 @@ import express from "express";
 import homepageRouter from "./homepageRouter.js";
 import {MongoClient} from 'mongodb'
 const port = process.env.PORT || 3000;
-const uri = "mongodb+srv://KenzieIsFan:IuyYMzVbMrYYzEfq@cluster0.4p5toe7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const uri = "mongodb+srv://KenzieIsFan:<password here>@cluster0.4p5toe7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 const app = express();
 const client = new MongoClient(uri);
 async function run() {
