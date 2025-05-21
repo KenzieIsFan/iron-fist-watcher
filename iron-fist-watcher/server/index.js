@@ -1,17 +1,10 @@
 import express from "express";
 import homepageRouter from "./homepageRouter.js";
-const { MongoClient } = require('mongodb');
+import {MongoClient} from 'mongodb'
 const port = process.env.PORT || 3000;
-const uri = "unknown"
+const uri = "mongodb+srv://KenzieIsFan:IuyYMzVbMrYYzEfq@cluster0.4p5toe7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 const app = express();
-const client = new MongoClient(uri,  {
-  serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-  }
-}
-);
+const client = new MongoClient(uri);
 async function run() {
   try {
     // Connect the client to the server (optional starting in v4.7)
@@ -63,6 +56,7 @@ async function get_DBdata(name) {
     await client.close();
   }
 }
+const example_names = [{name:'Arslan Ash'},{name:'Ulsan'},{name:'Mulgold'}]
 const example_data =   [{id:1,name:'Arslan Ash',placements:[
   {"class": "MASTER+","title":"EVO","date": "07/19/2024","rank":1,"points":800}, 
   {"class": "MASTER","title":"EVO-1","date": "07/01/2024","rank":3,"points":500},
@@ -109,6 +103,11 @@ app.get("/api/getData", (req,res) => {
     }
   }
   res.json({data:player_data})
+});
+
+app.get("/api/getNames",(req,res)=> {
+  res.json({data:example_names})
+
 });
 
 app.use(homepageRouter);

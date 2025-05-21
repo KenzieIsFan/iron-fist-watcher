@@ -13,10 +13,18 @@ import { computed, onMounted, reactive, ref } from "vue";
 //Later will have to create a way for the 
 //players should be an object of name and db id for when it is selected
 const emit = defineEmits(['change-player']) 
-const players = reactive([{name:"Arslan Ash"}, {name:"Ulsan"}]);
+const players = ref();
+
+
+fetch('/api/getNames'.toString()).then((r) => r.json())
+      .then(({ data }) => {
+          players.value = data
+      
+      });
+
 let input = ref("");
 const searchedPlayers = computed(() => {
-      return players.filter((player) => {
+      return players.value.filter((player) => {
         return (
           player.name
             .toLowerCase()
