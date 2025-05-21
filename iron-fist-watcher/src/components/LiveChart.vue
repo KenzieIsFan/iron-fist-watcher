@@ -19,7 +19,7 @@ export default {
           if (applicable_tournaments["m+"] != undefined){
             const mptourn = applicable_tournaments['m+'];
             if (mptourn.rank <= t.rank ) {
-              applicable_tournaments['m+'] = t
+              applicable_tournaments['m+'] = mptourn
               break;
             } 
           } else{
