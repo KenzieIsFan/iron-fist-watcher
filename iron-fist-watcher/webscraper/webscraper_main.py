@@ -1,12 +1,20 @@
 
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
+import sys
+import requests
 pymongoURI = "mongodb+srv://KenzieIsFan:<dbPasswordhere>@cluster0.4p5toe7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 #page = requests.get(URL)
-f = open("demofile.html", "r")
-page = f.read()
+if len(sys.argv) == 1:
+    filename = "demofile.html"
+    f = open(filename, "r")
+    page = f.read()
+else:
+    URL = sys.argv[1]
+    page = requests.get(URL)
 
-soup = BeautifulSoup(page,"html.parser")
+
+soup = BeautifulSoup(page.content,"html.parser")
 #BS can find div ids/classes
 #plan for the webscraper: make one to search the basic parts for results
 #make another one to search the page for info regarding the player on that tour.
